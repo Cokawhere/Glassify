@@ -54,8 +54,8 @@ class AuthServices {
       final userModel = UserModel(
         uid: user.uid,
         email: user.email ?? "",
-        name: displayName ?? "",
-        imageUrl: imageUrl ?? "",
+        name: displayName,
+        imageUrl: imageUrl,
       );
 
       await _firestore.collection('users').doc(user.uid).set(userModel.toMap());

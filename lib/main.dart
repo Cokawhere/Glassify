@@ -6,8 +6,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'features/Auth/controller.dart';
-import 'features/Auth/login_view.dart';
-import 'features/Auth/signup_view.dart';
+import 'features/Auth/view/login_view.dart';
+import 'features/Auth/view/signup_view.dart';
 import 'features/home/home_view.dart';
 import 'features/notifcation audio state/audio_handler.dart';
 
