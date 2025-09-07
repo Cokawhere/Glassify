@@ -121,6 +121,7 @@ class AuthServices {
     } catch (e) {
       showSnackBar(context, "$e");
     }
+    return null;
   }
 
   //signout

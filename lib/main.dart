@@ -7,6 +7,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'features/Auth/controller.dart';
 import 'features/Auth/login_view.dart';
+import 'features/Auth/signup_view.dart';
 import 'features/home/home_view.dart';
 import 'features/notifcation audio state/audio_handler.dart';
 
@@ -47,7 +48,7 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      ref.refresh(userStreamProvider); 
+      ref.refresh(userStreamProvider);
     }
   }
 
@@ -65,8 +66,12 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           ),
           routerConfig: GoRouter(
-            initialLocation: '/login',
+            initialLocation: '/signup',
             routes: [
+              GoRoute(
+                path: '/signup',
+                builder: (context, state) => const SignUpScreen(),
+              ),
               GoRoute(
                 path: '/login',
                 builder: (context, state) => const LoginScreen(),
@@ -78,9 +83,13 @@ class _MyAppState extends ConsumerState<MyApp> with WidgetsBindingObserver {
             ],
             redirect: (context, state) {
               final user = userStream.value;
-              if (user == null && state.uri.toString() != '/login') {
-                return '/login';
-              } else if (user != null && state.uri.toString() == '/login') {
+              final currentPath = state.uri.toString();
+              if (user == null &&
+                  currentPath != '/login' &&
+                  currentPath != '/signup') {
+                return '/signup';
+              } else if (user != null &&
+                  (currentPath == '/login' || currentPath == '/signup')) {
                 return '/home';
               }
               return null;

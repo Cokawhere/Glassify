@@ -1,5 +1,4 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/features/Auth/services.dart';
@@ -12,7 +11,6 @@ final currentUser = StateProvider<UserModel?>((ref) => null);
 
 
 final userStreamProvider = StreamProvider<UserModel?>((ref) async* {
-  final authService = AuthServices();
   await for (final firebaseUser in firebase_auth.FirebaseAuth.instance.authStateChanges()) {
     if (firebaseUser == null) {
       yield null;
