@@ -5,13 +5,11 @@ import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 class Liquidpasswordfield extends StatefulWidget {
   final TextEditingController controller;
   final String label;
-  final String? Function(String?)? validator;
 
   const Liquidpasswordfield({
     super.key,
     required this.controller,
     required this.label,
-    this.validator,
   });
   @override
   State<Liquidpasswordfield> createState() => _LiquidpasswordfieldState();
@@ -41,7 +39,6 @@ class _LiquidpasswordfieldState extends State<Liquidpasswordfield> {
             child: TextFormField(
               controller: widget.controller,
               obscureText: obscure,
-              validator: widget.validator,
               decoration: InputDecoration(
                 hintText: widget.label,
                 labelStyle: GoogleFonts.roboto(color: Colors.black87),

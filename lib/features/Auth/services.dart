@@ -1,40 +1,15 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/common/styles/colors.dart';
 import 'package:flutter_application_1/features/Auth/user_model.dart';
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+
+import '../../common/widgets/LiquidSnackBar.dart';
 
 class AuthServices {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   //errors ui
-  void showSnackBar(BuildContext context, String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: LiquidGlassLayer(
-          settings: LiquidGlassSettings(
-            thickness: 8,
-            glassColor: AppColors.pink,
-            blur: 6.0,
-          ),
-          child: Text(
-            message,
-            style: TextStyle(
-              fontSize: 16,
-              color: AppColors.black,
-              fontWeight: FontWeight.bold,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ),
-        backgroundColor: Colors.transparent,
-        duration: Duration(seconds: 3),
-        behavior: SnackBarBehavior.floating,
-      ),
-    );
-  }
 
   //signup
   Future<UserModel?> signup(
@@ -59,27 +34,31 @@ class AuthServices {
       );
 
       await _firestore.collection('users').doc(user.uid).set(userModel.toMap());
+      LiquidSnackBar.show(context, message: "Account created successfully 🎉");
       return userModel;
       //navigation to signin page
     } on FirebaseAuthException catch (e) {
       String errorMessage;
       switch (e.code) {
         case "weak-password":
-          errorMessage = 'weak-password';
+          LiquidSnackBar.show(context, message: 'weak-password');
           break;
         case 'email-already-in-use':
-          errorMessage = 'email-already-in-use';
+          LiquidSnackBar.show(context, message: 'email-already-in-use');
           break;
         case 'invalid-email':
-          errorMessage = 'invalid-email';
+          LiquidSnackBar.show(context, message: 'invalid-email');
           break;
         default:
-          errorMessage = ' faild to signin please try again : ${e.message}';
+          LiquidSnackBar.show(
+            context,
+            message: ' faild to signin please try again : ${e.message}',
+          );
       }
-      showSnackBar(context, errorMessage);
+      LiquidSnackBar.show(context, message: "$e");
       return null;
     } catch (e) {
-      showSnackBar(context, "$e");
+      LiquidSnackBar.show(context, message: "$e");
       return null;
     }
   } //signup fun
@@ -99,7 +78,7 @@ class AuthServices {
       final doc = await _firestore.collection("users").doc(user.uid).get();
 
       if (!doc.exists) {
-        showSnackBar(context, "user-not-found");
+        LiquidSnackBar.show(context, message: "user-not-found");
         return null;
       }
       return UserModel.frommap(doc.data()!);
@@ -119,7 +98,7 @@ class AuthServices {
           errorMessage = 'faild to login please try again : ${e.message}';
       }
     } catch (e) {
-      showSnackBar(context, "$e");
+      LiquidSnackBar.show(context, message: "$e");
     }
     return null;
   }
@@ -129,7 +108,7 @@ class AuthServices {
     try {
       await _auth.signOut();
     } catch (e) {
-      showSnackBar(context, "faild to logout try again : $e");
+      LiquidSnackBar.show(context, message: "faild to logout try again : $e");
     }
   }
 
@@ -142,12 +121,15 @@ class AuthServices {
       }
       final doc = await _firestore.collection("users").doc(user.uid).get();
       if (!doc.exists) {
-        showSnackBar(context, 'بيانات المستخدم غير موجودة في Firestore.');
+        LiquidSnackBar.show(
+          context,
+          message: 'بيانات المستخدم غير موجودة في Firestore.',
+        );
         return null;
       }
       return UserModel.frommap(doc.data()!);
     } catch (e) {
-      showSnackBar(context, 'فشل جلب بيانات المستخدم: $e');
+      LiquidSnackBar.show(context, message: 'فشل جلب بيانات المستخدم: $e');
       return null;
     }
   }

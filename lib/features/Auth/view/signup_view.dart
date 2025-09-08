@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../../common/styles/colors.dart';
+import '../../../common/widgets/LiquidSnackBar.dart';
 import '../../../common/widgets/liquidButton.dart';
 import '../../../common/widgets/liquidTextField.dart';
 import '../controller.dart';
@@ -90,19 +91,12 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
                             Text(
-                              'WELCOME',
+                              'Welcome',
                               style: TextStyle(
-                                fontSize: 23,
+                                fontSize: 24,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            // Image.asset(
-                            //   'assets/images/logo.png',
-                            //   height: 140,
-                            //   errorBuilder: (context, error, stackTrace) {
-                            //     return const Text("Image not found ");
-                            //   },
-                            // ),
                           ],
                         ),
                       ),
@@ -131,38 +125,96 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       Liquidpasswordfield(
                         controller: passwordController,
                         label: "Password",
-                        validator: (val) {
-                          return null;
-                        },
                       ),
                       const SizedBox(height: 15),
 
                       Liquidpasswordfield(
                         controller: confirmPasswordController,
                         label: "Confirm Password",
-                        validator: (val) {
-                          return null;
-                        },
                       ),
                       const SizedBox(height: 15),
 
                       Liquidbutton(
                         text: "Sign Up",
                         onPressed: () async {
-                          if (_formKey.currentState!.validate()) {
-                            await ref
-                                .read(authController)
-                                .signup(
-                                  context,
-                                  email: emailController.text.trim(),
-                                  password: passwordController.text.trim(),
-                                  displayName: nameController.text.trim(),
-                                  imageUrl:
-                                      imageUrlController.text.trim().isEmpty
-                                      ? null
-                                      : imageUrlController.text.trim(),
-                                );
+                          final email = emailController.text.trim();
+                          final name = nameController.text.trim();
+                          final password = passwordController.text.trim();
+                          final confirmPassword = confirmPasswordController.text
+                              .trim();
+
+                          if (email.isEmpty) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Email is required",
+                            );
+                            return;
                           }
+                          final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+                          if (!emailRegex.hasMatch(email)) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Enter a valid email",
+                            );
+                            return;
+                          }
+
+                          if (name.isEmpty) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Name is required",
+                            );
+                            return;
+                          }
+                          if (name.length < 3) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Name must be at least 3 characters",
+                            );
+                            return;
+                          }
+
+                          if (password.isEmpty) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Password is required",
+                            );
+                            return;
+                          }
+                          if (password.length < 6) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Password must be at least 6 characters",
+                            );
+                            return;
+                          }
+
+                          if (confirmPassword.isEmpty) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Please confirm your password",
+                            );
+                            return;
+                          }
+                          if (password != confirmPassword) {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Passwords do not match",
+                            );
+                            return;
+                          }
+
+                          await ref
+                              .read(authController)
+                              .signup(
+                                context,
+                                email: email,
+                                password: password,
+                                displayName: name,
+                                imageUrl: imageUrlController.text.trim().isEmpty
+                                    ? null
+                                    : imageUrlController.text.trim(),
+                              );
                         },
                       ),
                       const SizedBox(height: 15),

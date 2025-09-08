@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/common/styles/colors.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:go_router/go_router.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
-import '../../../common/styles/colors.dart';
+import 'package:google_fonts/google_fonts.dart';
+import '../../../common/widgets/LiquidSnackBar.dart';
+import '../../../common/widgets/liquidButton.dart';
+import '../../../common/widgets/liquidPasswordfield.dart';
+import '../../../common/widgets/liquidTextField.dart';
 import '../controller.dart';
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -13,6 +18,7 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  final _formKey = GlobalKey<FormState>();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
@@ -26,97 +32,115 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
+            begin: Alignment.topRight,
+            end: Alignment.bottomLeft,
             colors: [
               AppColors.pink,
               AppColors.white,
               AppColors.pink,
-              AppColors.white,
+              AppColors.pink,
             ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
           ),
         ),
         child: Center(
-          child: LiquidGlassLayer(
-            settings: const LiquidGlassSettings(
-              thickness: 8,
-              glassColor: Color.fromARGB(51, 245, 233, 233),
-              blur: 6.0,
-            ),
-            child: Container(
-              padding: const EdgeInsets.all(20),
-              width: 300,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    'تسجيل الدخول',
-                    style: GoogleFonts.roboto(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black,
-                    ),
+          child: SingleChildScrollView(
+            padding: EdgeInsets.only(right: 8, left: 8, top: 60, bottom: 80),
+            child: LiquidGlass(
+              settings: LiquidGlassSettings(
+                thickness: 27,
+                lightAngle: 90,
+                lightIntensity: 1.0,
+                glassColor: Color.fromARGB(13, 255, 255, 255),
+              ),
+              glassContainsChild: false,
+              shape: LiquidRoundedSuperellipse(
+                borderRadius: Radius.circular(80),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(right: 10, left: 10, bottom: 50),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          right: 10,
+                          left: 10,
+                          top: 30,
+                          bottom: 20,
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Text(
+                              'Welcome Back',
+                              style: TextStyle(
+                                fontSize: 23,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Liquidtextfield(
+                        controller: emailController,
+                        label: "Email",
+                        keyboardType: TextInputType.emailAddress,
+                      ),
+                      const SizedBox(height: 15),
+
+                      Liquidpasswordfield(
+                        controller: passwordController,
+                        label: "Password",
+                      ),
+                      const SizedBox(height: 15),
+                      Liquidbutton(
+                        text: "Login",
+                        onPressed: () async {
+                          if (_formKey.currentState!.validate()) {
+                            final user = await ref
+                                .read(authController)
+                                .signin(
+                                  context,
+                                  email: emailController.text.trim(),
+                                  password: passwordController.text.trim(),
+                                );
+                            if (user == null) {
+                              LiquidSnackBar.show(
+                                context,
+                                message: "Invalid email or password",
+                              );
+                            }
+                          } else {
+                            LiquidSnackBar.show(
+                              context,
+                              message: "Please fill the fields correctly",
+                            );
+                          }
+                        },
+                      ),
+                      const SizedBox(height: 15),
+                      InkWell(
+                        onTap: () {
+                          print("in side  on pressssed");
+                          context.go("/signup");
+                        },
+                        child: Text(
+                          "Don’t have an account? Sign Up",
+                          style: GoogleFonts.roboto(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            color: Colors.black87,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: 'الإيميل',
-                      labelStyle: GoogleFonts.roboto(color: Colors.black),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                  TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'كلمة المرور',
-                      labelStyle: GoogleFonts.roboto(color: Colors.black),
-                      filled: true,
-                      fillColor: Colors.white.withOpacity(0.3),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    obscureText: true,
-                  ),
-                  const SizedBox(height: 20),
-                  ElevatedButton(
-                    onPressed: () async {
-                      await ref
-                          .read(authController)
-                          .signin(
-                            context,
-                            email: emailController.text.trim(),
-                            password: passwordController.text.trim(),
-                          );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 40,
-                        vertical: 15,
-                      ),
-                      backgroundColor: Colors.black,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                    ),
-                    child: Text(
-                      'تسجيل الدخول',
-                      style: GoogleFonts.roboto(
-                        fontSize: 16,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
-                ],
+                ),
               ),
             ),
           ),

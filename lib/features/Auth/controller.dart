@@ -15,6 +15,7 @@ final userStreamProvider = StreamProvider<UserModel?>((ref) async* {
     if (firebaseUser == null) {
       yield null;
     } else {
+      await Future.delayed(Duration(milliseconds: 100));
       final doc = await FirebaseFirestore.instance
           .collection("users")
           .doc(firebaseUser.uid)
@@ -30,10 +31,10 @@ final userStreamProvider = StreamProvider<UserModel?>((ref) async* {
 
 class AuthController {
   final Ref ref;
-  final AuthServices _authServices;
-  AuthController(this.ref) : _authServices = AuthServices();
+  final AuthServices authServices;
+  AuthController(this.ref) : authServices = AuthServices();
 
-  //signup
+  
   Future<void> signup(
     BuildContext context, {
     required String email,
@@ -41,7 +42,7 @@ class AuthController {
     required String displayName,
     required String? imageUrl,
   }) async {
-    final user = await _authServices.signup(
+    final user = await authServices.signup(
       context,
       email,
       password,
@@ -50,27 +51,31 @@ class AuthController {
     );
     if (user != null) {
       ref.read(currentUser.notifier).state = user;
+      context.go('/home');
     }
-    context.go('/home');
+    
   }
 
-  //signin
-  Future<void> signin(
+
+  Future<UserModel?> signin(
     BuildContext context, {
     required String email,
     required String password,
   }) async {
-    final user = await _authServices.signin(context, email, password);
+    final user = await authServices.signin(context, email, password);
+        context.go('/home');
+
     if (user != null) {
       ref.read(currentUser.notifier).state = user;
     }
-    context.go('/home');
+    return user;
   }
 
-  //signout
   Future<void> signout(BuildContext context) async {
-    await _authServices.signout(context);
+    await authServices.signout(context);
     ref.read(currentUser.notifier).state = null;
+    // await Future.delayed(Duration(milliseconds: 100));
+    // context.go('/login');
   }
 
   // //current user
