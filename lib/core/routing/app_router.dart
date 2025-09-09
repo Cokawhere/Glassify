@@ -34,7 +34,7 @@ GoRouter createRouter(WidgetRef ref) {
           if (user == null) {
             return '/login';
           }
-          if (user != null && currentPath == '/login' ||
+          if (currentPath == '/login' ||
               currentPath == '/signup') {
             return '/home';
           }
