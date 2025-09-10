@@ -90,11 +90,13 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Text(
-                              'Welcome',
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                            Glassify(
+                              child: Text(
+                                'Welcome',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
                             ),
                           ],
@@ -220,12 +222,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                       const SizedBox(height: 15),
                       InkWell(
                         onTap: () => context.go("/login"),
-                        child: Text(
-                          "Already have an account? Login",
-                          style: GoogleFonts.roboto(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
+                        child:Glassify(
+                          child: Text(
+                            "Already have an account? Login",
+                            style: GoogleFonts.roboto(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ),

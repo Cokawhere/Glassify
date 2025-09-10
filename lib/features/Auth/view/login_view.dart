@@ -73,17 +73,19 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           top: 30,
                           bottom: 20,
                         ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Text(
-                              'Welcome Back',
-                              style: TextStyle(
-                                fontSize: 23,
-                                fontWeight: FontWeight.bold,
+                        child: Glassify(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                'Welcome Back',
+                                style: TextStyle(
+                                  fontSize: 23,
+                                  fontWeight: FontWeight.bold,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                       Liquidtextfield(
@@ -129,12 +131,14 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           print("in side  on pressssed");
                           context.go("/signup");
                         },
-                        child: Text(
-                          "Don’t have an account? Sign Up",
-                          style: GoogleFonts.roboto(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Colors.black87,
+                        child: Glassify(
+                          child: Text(
+                            "Don’t have an account? Sign Up",
+                            style: GoogleFonts.roboto(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                              color: Colors.black87,
+                            ),
                           ),
                         ),
                       ),

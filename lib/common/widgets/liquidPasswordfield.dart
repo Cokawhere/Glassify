@@ -41,7 +41,7 @@ class _LiquidpasswordfieldState extends State<Liquidpasswordfield> {
               obscureText: obscure,
               decoration: InputDecoration(
                 hintText: widget.label,
-                labelStyle: GoogleFonts.roboto(color: Colors.black87),
+                labelStyle: GoogleFonts.roboto(color: const Color.fromARGB(255, 255, 244, 244)),
                 suffixIcon: IconButton(
                   icon: Icon(obscure ? Icons.visibility_off : Icons.visibility),
                   onPressed: () => setState(() => obscure = !obscure),
