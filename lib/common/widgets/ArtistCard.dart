@@ -17,9 +17,9 @@ class Artistcard extends StatelessWidget {
           Text(
             name,
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 10,
               fontWeight: FontWeight.bold,
-              color:AppColors.font,
+              color:AppColors.subfont,
             ),
           ),
         ],

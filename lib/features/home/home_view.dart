@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/common/widgets/AllsongsSection.dart';
 import 'package:flutter_application_1/common/widgets/ArtistSection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../common/styles/colors.dart';
+import '../../common/widgets/Songsection.dart';
 import '../Auth/controller.dart';
 
 class HomeScreen extends ConsumerWidget {
@@ -31,6 +33,11 @@ class HomeScreen extends ConsumerWidget {
             padding: const EdgeInsets.all(6.0),
             child: LiquidGlass(
               glassContainsChild: true,
+              settings: LiquidGlassSettings(
+                thickness: 8,
+                lightAngle: 40,
+                lightness: 1.3,
+              ),
               shape: LiquidRoundedRectangle(borderRadius: Radius.circular(18)),
               child: Column(
                 children: [
@@ -61,7 +68,6 @@ class HomeScreen extends ConsumerWidget {
                             ),
                           ),
                           SizedBox(width: 129),
-
                           Padding(
                             padding: const EdgeInsets.all(10),
                             child: Glassify(
@@ -73,8 +79,8 @@ class HomeScreen extends ConsumerWidget {
                     ],
                   ),
                   Artistsection(sectionName: "Artists"),
-
-                  const SizedBox(height: 20),
+                  Songsection(sectionName: 'New Releses'),
+                  AllSongsection(sectionName: 'All Songs'),
                   InkWell(
                     onTap: () async {
                       await ref.read(authController).signout(context);

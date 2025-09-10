@@ -36,19 +36,21 @@ class MyGlassWidget extends StatelessWidget {
             Center(
               child: LiquidGlassLayer(
                 settings: const LiquidGlassSettings(
-                  thickness: 15, 
-                  glassColor: Color.fromARGB(
-                    22,
-                    255,
-                    255,
-                    255,
-                  ), 
+                  thickness: 15,                   // قوة الانكسار
+                glassColor: Color(0x33FFFFFF),   // لون الزجاج وشفافيته
+                blend: 50,                        // درجة الدمج بين shapes
+                lightIntensity: 2.0,              // شدة الإضاءة
+                lightAngle: 45,                   // زاوية الضوء
+                ambientStrength: 1.0,             // شدة الإضاءة المحيطة
+                saturation: 1.2,                  // تشبع اللون
+                lightness: 1.1,                   // سطوع الخلفية, 
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     // شكل واحد
                     LiquidGlass.inLayer(
+                      
                       shape: LiquidRoundedSuperellipse(
                         borderRadius: Radius.circular(40),
                       ),

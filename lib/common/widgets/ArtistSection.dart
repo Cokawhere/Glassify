@@ -18,10 +18,9 @@ class Artistsection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final artists = ref.watch(artistProvider);
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.only(left: 8,right: 8),
       child: Column(
         children: [
-          SizedBox(height: 10),
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
@@ -45,12 +44,11 @@ class Artistsection extends ConsumerWidget {
               ),
             ],
           ),
-
           LiquidGlass(
             glassContainsChild: false,
-            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(40)),
+            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(30)),
             child: SizedBox(
-              height: 118,
+              height: 110,
               child: artists.when(
                 data: (artists) => ListView.builder(
                   scrollDirection: Axis.horizontal,
