@@ -10,7 +10,13 @@ class HomeServices {
           .get();
       return snapshots.docs.map((doc) {
         final data = doc.data();
-        return Artist(imageUrl: data['image_url'], name: data['name']);
+        final id = doc.id;
+
+        return Artist(
+          imageUrl: data['image_url'] ,
+          name: data['name'] ,
+          id: id,
+        );
       }).toList();
     } catch (e) {
       print('faild to fetch artist list :$e');

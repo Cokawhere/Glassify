@@ -23,8 +23,8 @@ void main() {
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key});
-  
+  const MyApp({super.key}); 
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return AppLifecycleHandler(
@@ -35,7 +35,8 @@ class MyApp extends ConsumerWidget {
           textTheme: GoogleFonts.robotoTextTheme(Theme.of(context).textTheme),
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         ),
-        routerConfig: createRouter( ref),
+        restorationScopeId: 'app',
+        routerConfig: createRouter(ref),
       ),
     );
   }

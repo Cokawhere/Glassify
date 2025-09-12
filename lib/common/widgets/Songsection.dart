@@ -8,6 +8,7 @@ class Song {
   final String imageUrl;
   final String songName;
   final String artistName;
+  
   Song({
     required this.imageUrl,
     required this.songName,

@@ -1,0 +1,167 @@
+import 'dart:ui';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/common/styles/colors.dart';
+import 'package:flutter_application_1/common/widgets/ArtistSection.dart';
+import 'package:flutter_application_1/common/widgets/SongItem.dart';
+import 'package:flutter_application_1/features/ArtistDetailPage%D8%8C/artistdetailscontroller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+
+import '../Auth/controller.dart';
+
+class ArtistdetailView extends ConsumerWidget {
+  final Artist artist;
+
+  const ArtistdetailView({super.key, required this.artist});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final artistSongs = ref.watch(artistSongsProvider(artist.id));
+    final userAsync = ref.watch(userStreamProvider);
+    return Scaffold(
+      body: userAsync.when(
+        data: (user) {
+          final currentUserId = user?.uid ?? '';
+          final songsCount = artistSongs.maybeWhen(
+            data: (songs) => songs.length,
+            orElse: () => 0,
+          );
+          artistSongs.when(
+            data: (songs) {
+              for (var song in songs) {
+                print('Song ID: ${song['id']}, User ID: $currentUserId');
+              }
+            },
+            error: (error, stackTrace) => print('Error: $error'),
+            loading: () => print('Loading songs...'),
+          );
+          return Stack(
+            children: [
+              Positioned.fill(
+                child: Image.network(
+                  artist.imageUrl,
+                  fit: BoxFit.cover,
+                  loadingBuilder: (context, child, progress) {
+                    if (progress == null) return child;
+                    return const Center(child: CircularProgressIndicator());
+                  },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(Icons.error, color: Colors.red),
+                    );
+                  },
+                ),
+              ),
+
+              Positioned.fill(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
+                  child: Container(color: const Color.fromARGB(113, 2, 35, 26)),
+                ),
+              ),
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Glassify(
+                      child: IconButton(
+                        icon: const Icon(
+                          Icons.arrow_back_ios,
+                          color: Colors.white,
+                          size: 30,
+                        ),
+                        onPressed: () {
+                          context.go('/main');
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 100,
+                left: 0,
+                right: 0,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      artist.name,
+                      style: TextStyle(
+                        fontSize: 40,
+                        color: AppColors.subfont,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Text(
+                      '${songsCount.toString()} Tracks',
+                      style: TextStyle(
+                        fontSize: 21,
+                        color: AppColors.font,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              SafeArea(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: LiquidGlass(
+                      glassContainsChild: true,
+                      shape: LiquidRoundedRectangle(
+                        borderRadius: Radius.circular(15),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: SizedBox(
+                          height: MediaQuery.of(context).size.height * .7,
+                          child: artistSongs.when(
+                            data: (songs) {
+                              return ListView.builder(
+                                itemCount: songs.length,
+                                itemBuilder: (context, index) {
+                                  final song = songs[index];
+                                  return InkWell(
+                                    onTap: () {},
+                                    child: Songitem(
+                                      title: song['title'],
+                                      artist: artist.name,
+                                      imageUrl: song['cover_url'],
+                                      songId: song['id'],
+                                      artistId: artist.id,
+                                      userId: currentUserId ?? '',
+                                    ),
+                                  );
+                                },
+                              );
+                            },
+                            error: (error, StackTrace) {
+                              print("$error");
+                              return Center(child: Text('Error: $error'));
+                            },
+                            loading: () => CircularProgressIndicator(),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
+        loading: () => Center(child: CircularProgressIndicator()),
+        error: (error, stackTrace) => Center(
+          child: Text('Error: $error', style: TextStyle(color: Colors.red)),
+        ),
+      ),
+    );
+  }
+}

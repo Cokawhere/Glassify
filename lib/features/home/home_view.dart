@@ -15,6 +15,8 @@ class HomeScreen extends ConsumerWidget {
     final userStream = ref.watch(userStreamProvider);
 
     return Scaffold(
+      extendBody: true,
+      extendBodyBehindAppBar: false,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -29,6 +31,7 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
         child: SafeArea(
+          // bottom: false,
           child: Padding(
             padding: const EdgeInsets.all(6.0),
             child: LiquidGlass(
@@ -39,6 +42,7 @@ class HomeScreen extends ConsumerWidget {
                 lightness: 1.3,
               ),
               shape: LiquidRoundedRectangle(borderRadius: Radius.circular(18)),
+
               child: Column(
                 children: [
                   Row(
@@ -54,38 +58,59 @@ class HomeScreen extends ConsumerWidget {
                         ),
                       ),
                       SizedBox(width: 2),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Glassify(
-                            child: Text(
-                              'Hi ${userStream.value?.name ?? ""}',
-                              style: const TextStyle(
-                                fontSize: 30,
-                                fontWeight: FontWeight.bold,
-                                color: AppColors.white,
+                      Expanded(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Glassify(
+                              child: Text(
+                                'Hi ${userStream.value?.name ?? ""}',
+                                style: const TextStyle(
+                                  fontSize: 30,
+                                  fontWeight: FontWeight.bold,
+                                  color: AppColors.white,
+                                ),
                               ),
                             ),
-                          ),
-                          SizedBox(width: 129),
-                          Padding(
-                            padding: const EdgeInsets.all(10),
-                            child: Glassify(
-                              child: Icon(Icons.search, size: 35),
+                            SizedBox(width: 129),
+                            Padding(
+                              padding: const EdgeInsets.all(10),
+                              child: Glassify(
+                                child: Icon(Icons.search, size: 35),
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ],
                   ),
                   Artistsection(sectionName: "Artists"),
-                  Songsection(sectionName: 'New Releses'),
-                  AllSongsection(sectionName: 'All Songs'),
-                  InkWell(
-                    onTap: () async {
-                      await ref.read(authController).signout(context);
-                    },
-                    child: const Text("sign out"),
+
+                  Expanded(
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
+                        children: [
+                          Songsection(sectionName: 'New Releses'),
+                          AllSongsection(sectionName: 'All Songs'),
+                          InkWell(
+                            onTap: () async {
+                              await ref.read(authController).signout(context);
+                            },
+                            child: Glassify(
+                              child: const Text(
+                                "sign out",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(height: 100),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
               ),
