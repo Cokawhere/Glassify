@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/common/widgets/AllsongsSection.dart';
 import 'package:flutter_application_1/common/widgets/ArtistSection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../common/styles/colors.dart';
 import '../../common/widgets/Songsection.dart';
 import '../Auth/controller.dart';
+import 'home_controller.dart';
 
 class HomeScreen extends ConsumerWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userStream = ref.watch(userStreamProvider);
-
     return Scaffold(
       extendBody: true,
       extendBodyBehindAppBar: false,
@@ -46,67 +45,39 @@ class HomeScreen extends ConsumerWidget {
               child: Column(
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage: NetworkImage(
-                            userStream.value?.imageUrl ??
-                                "https://i.pinimg.com/1200x/10/d3/eb/10d3eb63d65c49f45148b61142d9b22d.jpg",
+                      Glassify(
+                        child: Padding(
+                          padding: const EdgeInsets.only(top: 14),
+                          child: Text(
+                            'Glassify',
+                            style: GoogleFonts.tajawal(
+                              fontSize: 35,
+                              fontWeight: FontWeight.w900,
+                              letterSpacing: 1,
+                            ),
                           ),
-                        ),
-                      ),
-                      SizedBox(width: 2),
-                      Expanded(
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Glassify(
-                              child: Text(
-                                'Hi ${userStream.value?.name ?? ""}',
-                                style: const TextStyle(
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold,
-                                  color: AppColors.white,
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: 129),
-                            Padding(
-                              padding: const EdgeInsets.all(10),
-                              child: Glassify(
-                                child: Icon(Icons.search, size: 35),
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ],
                   ),
-                  Artistsection(sectionName: "Artists"),
+                  Artistsection(),
 
                   Expanded(
                     child: SingleChildScrollView(
                       physics: const BouncingScrollPhysics(),
                       child: Column(
                         children: [
-                          Songsection(sectionName: 'New Releses'),
-                          AllSongsection(sectionName: 'All Songs'),
-                          InkWell(
-                            onTap: () async {
-                              await ref.read(authController).signout(context);
-                            },
-                            child: Glassify(
-                              child: const Text(
-                                "sign out",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
+                          Songsection(
+                            sectionName: 'New Releses',
+                            songsProvider: newReleasesFutureProvider,
                           ),
+                          Songsection(
+                            sectionName: 'All Songs',
+                            songsProvider: alphabeticalSongsProvider,
+                          ),
+
                           SizedBox(height: 100),
                         ],
                       ),

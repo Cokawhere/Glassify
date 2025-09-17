@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter_application_1/common/widgets/ArtistSection.dart';
-import 'package:flutter_application_1/common/widgets/Songsection.dart';
+import 'package:flutter_application_1/features/notifcation%20audio%20state/model_song.dart';
+
+import '../../models/artist.dart';
 
 class HomeServices {
   Future<List<Artist>> getArtists() async {
@@ -10,43 +11,51 @@ class HomeServices {
           .get();
       return snapshots.docs.map((doc) {
         final data = doc.data();
-        final id = doc.id;
-
-        return Artist(
-          imageUrl: data['image_url'] ,
-          name: data['name'] ,
-          id: id,
-        );
+        return Artist.fromJson(doc.id, data);
       }).toList();
     } catch (e) {
-      print('faild to fetch artist list :$e');
       return [];
     }
   }
 
-  Future<List<Song>> getSongs() async {
+  Future<List<Songg>> getSongs() async {
     try {
       final songsQuery = await FirebaseFirestore.instance
           .collection("songs")
           .get();
-      final artisQuery = await FirebaseFirestore.instance
-          .collection("artists")
-          .get();
-      final artisMap = {
-        for (var doc in artisQuery.docs) doc.id: doc.data()['name'] ?? '',
-      };
       return songsQuery.docs.map((doc) {
         final song = doc.data();
-        final artistName = artisMap[song['artist_id']] ?? "UnKnowen";
-        return Song(
-          imageUrl: song['cover_url'],
-          songName: song['title'],
-          artistName: artistName,
+        return Songg(
+          coverUrl: song['cover_url'],
+          title: song['title'],
+          artistId: song['artist_id'] ?? '',
+          audioUrl: song['audio_url'] ?? '',
+          id: doc.id,
         );
       }).toList();
     } catch (e) {
-      print('e');
       return [];
     }
   }
+}
+
+Future<Artist> getArtistFromSongId(String songId) async {
+  final songDoc = await FirebaseFirestore.instance
+      .collection('songs')
+      .doc(songId)
+      .get();
+
+  if (!songDoc.exists) throw Exception('Song not found');
+
+  final artistId = songDoc.data()?['artist_id'];
+  if (artistId == null) throw Exception('Artist ID not found in song');
+
+  final artistDoc = await FirebaseFirestore.instance
+      .collection('artists')
+      .doc(artistId)
+      .get();
+
+  if (!artistDoc.exists) throw Exception('Artist not found');
+
+  return Artist.fromJson(artistDoc.id, artistDoc.data()!);
 }
