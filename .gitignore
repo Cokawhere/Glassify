@@ -13,8 +13,7 @@
 firebase.json
 flutter_application_1.iml
 migrate_working_dir/
-lib\firebase_options.dart
-C:\labs\after grad\riverpod\flutter_application_1\lib\firebase_options.dart
+lib/firebase_options.dart
 
 # IntelliJ related
 *.iml
