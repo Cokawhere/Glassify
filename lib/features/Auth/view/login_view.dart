@@ -128,7 +128,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       const SizedBox(height: 15),
                       InkWell(
                         onTap: () {
-                          print("in side  on pressssed");
                           context.go("/signup");
                         },
                         child: Glassify(
