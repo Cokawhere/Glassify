@@ -1,14 +1,16 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/styles/colors.dart';
-import 'package:flutter_application_1/common/widgets/ArtistSection.dart';
 import 'package:flutter_application_1/common/widgets/SongItem.dart';
 import 'package:flutter_application_1/features/ArtistDetailPage%D8%8C/artistdetailscontroller.dart';
+import 'package:flutter_application_1/models/artist.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import '../../common/widgets/app_loader.dart';
 
 import '../Auth/controller.dart';
+import '../notifcation audio state/model_song.dart';
 
 class ArtistdetailView extends ConsumerWidget {
   final Artist artist;
@@ -27,15 +29,6 @@ class ArtistdetailView extends ConsumerWidget {
             data: (songs) => songs.length,
             orElse: () => 0,
           );
-          artistSongs.when(
-            data: (songs) {
-              for (var song in songs) {
-                print('Song ID: ${song['id']}, User ID: $currentUserId');
-              }
-            },
-            error: (error, stackTrace) => print('Error: $error'),
-            loading: () => print('Loading songs...'),
-          );
           return Stack(
             children: [
               Positioned.fill(
@@ -44,7 +37,7 @@ class ArtistdetailView extends ConsumerWidget {
                   fit: BoxFit.cover,
                   loadingBuilder: (context, child, progress) {
                     if (progress == null) return child;
-                    return const Center(child: CircularProgressIndicator());
+                    return const AppLoader();
                   },
                   errorBuilder: (context, error, stackTrace) {
                     return const Center(
@@ -57,7 +50,9 @@ class ArtistdetailView extends ConsumerWidget {
               Positioned.fill(
                 child: BackdropFilter(
                   filter: ImageFilter.blur(sigmaX: 2, sigmaY: 2),
-                  child: Container(color: const Color.fromARGB(113, 2, 35, 26)),
+                  child: Container(
+                    color: const Color.fromARGB(55, 62, 167, 139),
+                  ),
                 ),
               ),
               SafeArea(
@@ -65,17 +60,16 @@ class ArtistdetailView extends ConsumerWidget {
                   alignment: Alignment.topLeft,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Glassify(
-                      child: IconButton(
-                        icon: const Icon(
-                          Icons.arrow_back_ios,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          context.go('/main');
-                        },
+
+                    child: IconButton(
+                      icon: const Icon(
+                        Icons.arrow_back_ios,
+                        color: AppColors.subfont,
+                        size: 30,
                       ),
+                      onPressed: () {
+                        context.pop();
+                      },
                     ),
                   ),
                 ),
@@ -101,7 +95,7 @@ class ArtistdetailView extends ConsumerWidget {
                       style: TextStyle(
                         fontSize: 21,
                         color: AppColors.font,
-                        fontWeight: FontWeight.bold,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ],
@@ -114,7 +108,7 @@ class ArtistdetailView extends ConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: LiquidGlass(
-                      glassContainsChild: true,
+                      glassContainsChild: false,
                       shape: LiquidRoundedRectangle(
                         borderRadius: Radius.circular(15),
                       ),
@@ -123,30 +117,43 @@ class ArtistdetailView extends ConsumerWidget {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height * .7,
                           child: artistSongs.when(
-                            data: (songs) {
+                            data: (songsData) {
+                              final songsList = songsData
+                                  .map((s) => Songg.formMap(s, s['id'] ?? ''))
+                                  .toList();
                               return ListView.builder(
-                                itemCount: songs.length,
+                                itemCount: songsList.length,
                                 itemBuilder: (context, index) {
-                                  final song = songs[index];
+                                  final song = songsList[index];
                                   return InkWell(
-                                    onTap: () {},
+                                    onTap: () async {
+                                     
+                                      context.push(
+                                        '/songdetails',
+                                        extra: {
+                                          'song': song,
+                                          'artist': artist,
+                                          'userId': currentUserId,
+                                          'artistSongs': songsList,
+                                        },
+                                      );
+                                    },
                                     child: Songitem(
-                                      title: song['title'],
-                                      artist: artist.name,
-                                      imageUrl: song['cover_url'],
-                                      songId: song['id'],
+                                      title: song.title,
+                                      imageUrl: song.coverUrl,
+                                      songId: song.id,
                                       artistId: artist.id,
                                       userId: currentUserId ?? '',
+                                      audioUrl: song.audioUrl,
                                     ),
                                   );
                                 },
                               );
                             },
-                            error: (error, StackTrace) {
-                              print("$error");
+                            error: (error, stackTrace) {
                               return Center(child: Text('Error: $error'));
                             },
-                            loading: () => CircularProgressIndicator(),
+                            loading: () => const AppLoader(),
                           ),
                         ),
                       ),
@@ -157,7 +164,7 @@ class ArtistdetailView extends ConsumerWidget {
             ],
           );
         },
-        loading: () => Center(child: CircularProgressIndicator()),
+        loading: () => const AppLoader(),
         error: (error, stackTrace) => Center(
           child: Text('Error: $error', style: TextStyle(color: Colors.red)),
         ),

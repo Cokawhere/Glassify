@@ -1,6 +1,8 @@
 import 'package:flutter_application_1/features/ArtistDetailPage%D8%8C/artistdetails_services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../models/artist.dart';
+
 final artistServicesProvider = Provider<ArtistdetailsServices>(
   (ref) => ArtistdetailsServices(),
 );
@@ -10,6 +12,11 @@ final artistSongsProvider = FutureProvider.family<List<Map<String, dynamic>>, St
   artistId,
 ) {
   return ref.read(artistServicesProvider).getArtistSongs(artistId);
+});
+
+final artistDetailsProvider =
+    FutureProvider.family<Artist, String>((ref, artistId) {
+  return ref.read(artistServicesProvider).getArtistDetails(artistId);
 });
 
 final likeSongProvider = Provider<LikeSongController>((ref) {
