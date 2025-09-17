@@ -1,23 +1,24 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/firebase_options.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'core/app_lifecycle_handler.dart';
 import 'core/routing/app_router.dart';
 import 'features/notifcation audio state/audio_handler.dart';
+import 'firebase_options.dart';
 
 late final AudioHandler audioHandler;
 
 Future<void> initializeServices() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  audioHandler = await initAudioService();
+
+  audioHandler = await initAudioService();    
 }
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeServices().then((_) {
+  initializeServices().then((_) { 
     runApp(const ProviderScope(child: MyApp()));
   });
 }
