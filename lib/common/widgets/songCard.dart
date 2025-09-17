@@ -1,20 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/features/ArtistDetailPage%D8%8C/artistdetailscontroller.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../styles/colors.dart';
 
-class Songcard extends StatelessWidget {
+class Songcard extends ConsumerWidget {
   final String imageUrl;
   final String songName;
-  final String artistName;
+  final String artistId;
 
   const Songcard({
     super.key,
-    required this.artistName,
+    required this.artistId,
     required this.imageUrl,
     required this.songName,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final artistFuture = ref.watch(artistDetailsProvider(artistId));
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: Column(
@@ -55,12 +59,23 @@ class Songcard extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              Text(
-                artistName,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
-                  color: AppColors.font,
+              artistFuture.when(
+                data: (artist) => Text(
+                  artist.name,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    fontWeight: FontWeight.w600,
+                    color: AppColors.font,
+                  ),
+                ),
+                loading: () => const SizedBox(
+                  width: 50,
+                  height: 10,
+                  child: LinearProgressIndicator(),
+                ),
+                error: (e, st) => const Text(
+                  'N/A',
+                  style: TextStyle(fontSize: 14, color: Colors.red),
                 ),
               ),
             ],

@@ -4,19 +4,10 @@ import 'package:flutter_application_1/features/home/home_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
-
-import '../../core/routing/app_router.dart';
-
-class Artist {
-  final String imageUrl;
-  final String name;
-  final String id;
-  Artist({required this.imageUrl, required this.name, required this.id});
-}
+import 'app_loader.dart';
 
 class Artistsection extends ConsumerWidget {
-  final String sectionName;
-  const Artistsection({super.key, required this.sectionName});
+  const Artistsection({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -25,10 +16,7 @@ class Artistsection extends ConsumerWidget {
       padding: const EdgeInsets.only(left: 8, right: 8),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [SizedBox(width: 8), SizedBox(height: 8)],
-          ),
+          const SizedBox(height: 8),
           LiquidGlass(
             glassContainsChild: false,
             shape: LiquidRoundedRectangle(borderRadius: Radius.circular(30)),
@@ -41,14 +29,8 @@ class Artistsection extends ConsumerWidget {
                   itemBuilder: (context, index) {
                     final artist = artists[index];
                     return InkWell(
-                      onTap: () {
-                        ref.read(selectedArtistProvider.notifier).state =
-                            artist;
-                        context.go('/artistdetails');
-
-                        // context.go('/artistdetails', extra: artist);
-
-                      },
+                      onTap: () =>
+                          context.push('/artistdetails', extra: artist),
                       child: Artistcard(
                         imageUrl: artist.imageUrl,
                         name: artist.name,
@@ -56,11 +38,10 @@ class Artistsection extends ConsumerWidget {
                     );
                   },
                 ),
-                error: (eror, Stack) {
-                  print("$eror");
+                error: (eror, stack) {
                   return Text('error');
                 },
-                loading: () => CircularProgressIndicator(),
+                loading: () => const AppLoader(),
               ),
             ),
           ),
