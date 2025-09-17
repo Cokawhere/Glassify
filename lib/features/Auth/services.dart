@@ -38,7 +38,6 @@ class AuthServices {
       return userModel;
       //navigation to signin page
     } on FirebaseAuthException catch (e) {
-      String errorMessage;
       switch (e.code) {
         case "weak-password":
           LiquidSnackBar.show(context, message: 'weak-password');

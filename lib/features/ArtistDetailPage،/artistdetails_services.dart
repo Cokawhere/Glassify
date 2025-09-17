@@ -1,5 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../../models/artist.dart';
+
 class ArtistdetailsServices {
   Future<List<Map<String, dynamic>>> getArtistSongs(String artistId) async {
     try {
@@ -13,6 +15,19 @@ class ArtistdetailsServices {
     } catch (e) {
       print("fialed to fetch artist's songs :$e");
       return [];
+    }
+  }
+
+  Future<Artist> getArtistDetails(String artistId) async {
+    try {
+      final doc = await FirebaseFirestore.instance
+          .collection('artists')
+          .doc(artistId)
+          .get();
+      if (!doc.exists) throw Exception('Artist not found');
+      return Artist.fromJson(doc.id, doc.data()!);
+    } catch (e) {
+      throw Exception("Failed to fetch artist details: $e");
     }
   }
 
