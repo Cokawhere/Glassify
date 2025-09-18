@@ -83,7 +83,7 @@ class AuthController {
     try {
       await firebaseUser.updateDisplayName(name);
 
-      final updateData = <String, dynamic>{'name': name};
+      final updateData = <String, dynamic>{'displayName': name};
       if (imageUrl != null) {
         await firebaseUser.updatePhotoURL(imageUrl);
         updateData['imageUrl'] = imageUrl;

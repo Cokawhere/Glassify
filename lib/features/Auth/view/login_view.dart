@@ -48,7 +48,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(right: 8, left: 8, top: 60, bottom: 80),
+            padding: EdgeInsets.only(right: 8, left: 8, top: 100, bottom: 80),
             child: LiquidGlass(
               settings: LiquidGlassSettings(
                 thickness: 27,
@@ -61,7 +61,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 borderRadius: Radius.circular(80),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(right: 10, left: 10, bottom: 50),
+                padding: const EdgeInsets.only(
+                  right: 10,
+                  left: 10,
+                  bottom: 100,
+                ),
                 child: Form(
                   key: _formKey,
                   child: Column(

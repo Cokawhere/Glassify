@@ -97,7 +97,7 @@ class PlaybackControls extends ConsumerWidget {
                         "${pos.inMinutes}:${pos.inSeconds.remainder(60).toString().padLeft(2, '0')}",
                         style: const TextStyle(
                           color: AppColors.subfont,
-                          fontSize: 20,
+                          fontSize: 17,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
@@ -105,7 +105,7 @@ class PlaybackControls extends ConsumerWidget {
                         "${total.inMinutes}:${total.inSeconds.remainder(60).toString().padLeft(2, '0')}",
                         style: const TextStyle(
                           color: AppColors.subfont,
-                          fontSize: 20,
+                          fontSize: 17,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

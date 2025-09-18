@@ -13,18 +13,18 @@ late final AudioHandler audioHandler;
 Future<void> initializeServices() async {
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 
-  audioHandler = await initAudioService();    
+  audioHandler = await initAudioService();
 }
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
-  initializeServices().then((_) { 
+  initializeServices().then((_) {
     runApp(const ProviderScope(child: MyApp()));
   });
 }
 
 class MyApp extends ConsumerWidget {
-  const MyApp({super.key}); 
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

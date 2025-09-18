@@ -53,7 +53,7 @@ class _SongDetailsViewState extends ConsumerState<SongDetailsView> {
           ),
 
           Padding(
-            padding: const EdgeInsets.only(right: 10, left: 10, top: 40),
+            padding: const EdgeInsets.only(right: 7, left: 7, top: 40),
             child: LikeButtonRow(
               song: displayedSong,
               artist: widget.artist,
@@ -68,7 +68,6 @@ class _SongDetailsViewState extends ConsumerState<SongDetailsView> {
                 const SizedBox(height: 120),
 
                 CoverImageSection(song: displayedSong, artist: widget.artist),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(
                     horizontal: 10,

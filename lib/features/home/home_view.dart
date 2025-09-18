@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../common/styles/colors.dart';
 import '../../common/widgets/Songsection.dart';
-import '../Auth/controller.dart';
 import 'home_controller.dart';
 
 class HomeScreen extends ConsumerWidget {

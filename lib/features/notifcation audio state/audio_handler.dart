@@ -63,7 +63,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       final newQueue = queue.value;
       if (index == null || newQueue.isEmpty || duration == null) return;
       if (_player.shuffleModeEnabled) {
-        index = _player.shuffleIndices![index];
+        index = _player.shuffleIndices[index];
       }
       final oldMediaItem = newQueue[index];
       final newMediaItem = oldMediaItem.copyWith(duration: duration);
@@ -78,7 +78,7 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
       final playlist = queue.value;
       if (index == null || playlist.isEmpty) return;
       if (_player.shuffleModeEnabled) {
-        index = _player.shuffleIndices![index];
+        index = _player.shuffleIndices[index];
       }
       mediaItem.add(playlist[index]);
     });
@@ -86,8 +86,8 @@ class MyAudioHandler extends BaseAudioHandler with QueueHandler, SeekHandler {
 
   void _listenForSequenceStateChanges() {
     _player.sequenceStateStream.listen((sequenceState) {
-      final sequence = sequenceState?.effectiveSequence;
-      if (sequence == null || sequence.isEmpty) return;
+      final sequence = sequenceState.effectiveSequence;
+      if (sequence.isEmpty) return;
       final items = sequence.map((source) => source.tag as MediaItem).toList();
       queue.add(items);
     });

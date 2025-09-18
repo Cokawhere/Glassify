@@ -20,7 +20,7 @@ class LiquidSnackBar {
               thickness: 27,
               lightAngle: 90,
               lightIntensity: 1.0,
-              glassColor: const Color.fromARGB(255, 222, 58, 99),
+              glassColor: const Color.fromARGB(9, 222, 58, 99),
             ),
             glassContainsChild: false,
             shape: LiquidRoundedSuperellipse(borderRadius: Radius.circular(80)),

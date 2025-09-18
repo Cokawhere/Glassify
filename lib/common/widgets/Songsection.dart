@@ -24,7 +24,7 @@ class Songsection extends ConsumerWidget {
     final userAsync = ref.watch(userStreamProvider);
 
     return Padding(
-      padding: const EdgeInsets.only(right: 8, left: 8, bottom: 8),
+      padding: const EdgeInsets.only(right: 8, left: 8, bottom: 0),
       child: Column(
         children: [
           Row(

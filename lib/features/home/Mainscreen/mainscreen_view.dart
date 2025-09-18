@@ -44,7 +44,6 @@ class _MainScreenState extends ConsumerState<MainScreen> {
       extendBody: true,
       body: userAsync.when(
         data: (user) {
-          // IndexedStack preserves the state of each page when switching tabs.
           return IndexedStack(
             index: _currentIndex,
             children: const [HomeScreen(), FavoritesScreen(), SettingsScreen()],
@@ -67,21 +66,21 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             currentIndex: _currentIndex,
             onTap: (index) => setState(() => _currentIndex = index),
             backgroundColor: AppColors.pink.withOpacity(0.8),
-            selectedItemColor: AppColors.white,
-            unselectedItemColor: AppColors.subfont,
+            selectedItemColor: AppColors.subfont,
+            unselectedItemColor: AppColors.font,
             items: const [
               BottomNavigationBarItem(
                 icon: Icon(Icons.home_outlined),
-                activeIcon: Icon(Icons.home),
+                activeIcon: Icon(Icons.home, size: 35),
                 label: '',
               ),
               BottomNavigationBarItem(
                 icon: Icon(Icons.favorite_border),
-                activeIcon: Icon(Icons.favorite),
+                activeIcon: Icon(Icons.favorite, size: 35),
                 label: '',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.settings_outlined),
+                icon: Icon(Icons.settings_outlined, size: 35),
                 activeIcon: Icon(Icons.settings),
                 label: '',
               ),

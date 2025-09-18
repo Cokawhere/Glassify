@@ -21,7 +21,7 @@ class CurrentSongNotifier extends StateNotifier<Songg?> {
         return Songg(
           id: item.id,
           title: item.title,
-          artistId: item.album ?? '',
+          artistId: item.artist ?? '', // Read from the correct 'artist' field
           coverUrl: item.artUri.toString(),
           audioUrl: item.extras?['url'] as String? ?? '',
           duration: dur ?? fallbackDur,
@@ -67,8 +67,10 @@ class AudioController {
           .map(
             (s) => MediaItem(
               id: s.id,
-              album: s.artistId,
               title: s.title,
+              artist:
+                  s.artistName ??
+                  s.artistId, // Use artistName if available, fallback to ID
               artUri: Uri.parse(s.coverUrl),
               extras: {
                 'url': s.audioUrl,
