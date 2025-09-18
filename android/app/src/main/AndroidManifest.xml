@@ -7,8 +7,8 @@
 
 
     <application
-    android:label="app_name"
-    android:icon="@mipmap/ic_launcher"
+    android:label="Glassify"
+    android:icon="@mipmap/launcher_icon"
     android:enableOnBackInvokedCallback="true">
 
         <meta-data
