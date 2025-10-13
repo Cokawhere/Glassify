@@ -1,16 +1,20 @@
-# flutter_application_1
+Glassify is a music app designed with a glassmorphism UI:
 
-A new Flutter project.
+- Browse & Play Songs – Smooth and minimal player .
+- User Authentication – Firebase Auth for sign-in and sign-up.
+- Favorites – Save your liked songs to a personalized list stored in Firestore.
+- Artist Profiles – View artists and their tracks in a clean layout.
+- Persistent & Background Playback – Keep the music playing across screens 
+and even when minimized, powered by audio_service and just_audio
+- page setting 
 
-## Getting Started
+Tech stack:
 
-This project is a starting point for a Flutter application.
+Flutter + Riverpod for state management
 
-A few resources to get you started if this is your first Flutter project:
+Firebase (Auth + Firestore) as backend
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+Liquid Glass Renderer for gorgeous glassmorphism effects
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Feature-Based Architecture with custom reusable widgets and clean separation of views, controllers, and services
+
