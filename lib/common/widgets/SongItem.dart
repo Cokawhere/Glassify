@@ -78,7 +78,7 @@ class _SongitemState extends ConsumerState<Songitem> {
                         data: (artist) => Text(
                           artist.name,
                           style: const TextStyle(
-                            color: Colors.grey,
+                            color: AppColors.subfont,
                             fontSize: 15,
                           ),
                         ),
