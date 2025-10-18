@@ -1,5 +1,6 @@
 import 'package:audio_service/audio_service.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:flutter_application_1/features/ArtistDetailPage،/artistdetailscontroller.dart';
@@ -29,7 +30,7 @@ class CurrentSongWidget extends ConsumerWidget {
 
     return Material(
       elevation: 6,
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       color: AppColors.pink.withOpacity(0.9),
       child: InkWell(
         onTap: () async {
@@ -60,27 +61,27 @@ class CurrentSongWidget extends ConsumerWidget {
         },
         child: LiquidGlass(
           glassContainsChild: false,
-          shape: LiquidRoundedRectangle(borderRadius: Radius.circular(16)),
+          shape: LiquidRoundedRectangle(borderRadius: Radius.circular(16.r)),
           child: Container(
-            height: 70,
-            padding: const EdgeInsets.symmetric(horizontal: 12),
+            height: 70.h,
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
             child: Row(
               children: [
                 ClipRRect(
-                  borderRadius: BorderRadius.circular(12),
+                  borderRadius: BorderRadius.circular(12.r),
                   child: Image.network(
                     currentSong.coverUrl,
-                    width: 55,
-                    height: 55,
+                    width: 55.w,
+                    height: 55.w,
                     fit: BoxFit.cover,
-                    errorBuilder: (context, error, stackTrace) => const Icon(
+                    errorBuilder: (context, error, stackTrace) => Icon(
                       Icons.broken_image,
-                      size: 55,
+                      size: 55.w,
                       color: Colors.white70,
                     ),
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12.w),
                 Expanded(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -91,7 +92,7 @@ class CurrentSongWidget extends ConsumerWidget {
                         style: const TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 16,
+                          fontSize: 16, // .sp can be used here
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -102,7 +103,7 @@ class CurrentSongWidget extends ConsumerWidget {
                               artist.name,
                               style: const TextStyle(
                                 color: Colors.white70,
-                                fontSize: 13,
+                                fontSize: 13, // .sp can be used here
                               ),
                               overflow: TextOverflow.ellipsis,
                             ),
@@ -111,7 +112,7 @@ class CurrentSongWidget extends ConsumerWidget {
                               'Unknown Artist',
                               style: TextStyle(
                                 color: Colors.white54,
-                                fontSize: 13,
+                                fontSize: 13, // .sp can be used here
                               ),
                             ),
                           ),
@@ -122,7 +123,7 @@ class CurrentSongWidget extends ConsumerWidget {
                   icon: Icon(
                     isPlaying ? Icons.pause : Icons.play_arrow,
                     color: Colors.white,
-                    size: 30,
+                    size: 30.r,
                   ),
                   onPressed: () {
                     if (isPlaying) {

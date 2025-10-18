@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/styles/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import 'package:google_fonts/google_fonts.dart';
 import '../../../common/widgets/LiquidSnackBar.dart';
@@ -48,7 +50,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
         ),
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(right: 8, left: 8, top: 100, bottom: 80),
+            padding: EdgeInsets.fromLTRB(8.w, 100.h, 8.w, 80.h),
             child: LiquidGlass(
               settings: LiquidGlassSettings(
                 thickness: 27,
@@ -58,14 +60,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               ),
               glassContainsChild: false,
               shape: LiquidRoundedSuperellipse(
-                borderRadius: Radius.circular(80),
+                borderRadius: Radius.circular(80.r),
               ),
               child: Padding(
-                padding: const EdgeInsets.only(
-                  right: 10,
-                  left: 10,
-                  bottom: 100,
-                ),
+                padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 100.h),
                 child: Form(
                   key: _formKey,
                   child: Column(
@@ -76,7 +74,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           left: 10,
                           top: 30,
                           bottom: 20,
-                        ),
+                        ).r,
                         child: Glassify(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -84,7 +82,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                               Text(
                                 'Welcome Back',
                                 style: TextStyle(
-                                  fontSize: 23,
+                                  fontSize: 23.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -97,13 +95,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         label: "Email",
                         keyboardType: TextInputType.emailAddress,
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
 
                       Liquidpasswordfield(
                         controller: passwordController,
                         label: "Password",
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       Liquidbutton(
                         text: "Login",
                         onPressed: () async {
@@ -129,7 +127,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           }
                         },
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       InkWell(
                         onTap: () {
                           context.go("/signup");
@@ -138,7 +136,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           child: Text(
                             "Don’t have an account? Sign Up",
                             style: GoogleFonts.roboto(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                               color: Colors.black87,
                             ),

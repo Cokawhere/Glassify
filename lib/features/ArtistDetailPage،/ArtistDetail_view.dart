@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/styles/colors.dart';
 import 'package:flutter_application_1/common/widgets/SongItem.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_application_1/features/ArtistDetailPage%D8%8C/artistdetailscontroller.dart';
 import 'package:flutter_application_1/models/artist.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -59,13 +60,13 @@ class ArtistdetailView extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0.r),
 
                     child: IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         Icons.arrow_back_ios,
                         color: AppColors.subfont,
-                        size: 30,
+                        size: 30.r,
                       ),
                       onPressed: () {
                         context.pop();
@@ -75,7 +76,7 @@ class ArtistdetailView extends ConsumerWidget {
                 ),
               ),
               Positioned(
-                top: 100,
+                top: 100.h,
                 left: 0,
                 right: 0,
                 child: Column(
@@ -85,7 +86,7 @@ class ArtistdetailView extends ConsumerWidget {
                     Text(
                       artist.name,
                       style: TextStyle(
-                        fontSize: 40,
+                        fontSize: 40.sp,
                         color: AppColors.subfont,
                         fontWeight: FontWeight.bold,
                       ),
@@ -93,7 +94,7 @@ class ArtistdetailView extends ConsumerWidget {
                     Text(
                       '${songsCount.toString()} Tracks',
                       style: TextStyle(
-                        fontSize: 21,
+                        fontSize: 21.sp,
                         color: AppColors.font,
                         fontWeight: FontWeight.w900,
                       ),
@@ -106,16 +107,16 @@ class ArtistdetailView extends ConsumerWidget {
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.all(8.0.r),
                     child: LiquidGlass(
                       glassContainsChild: false,
                       shape: LiquidRoundedRectangle(
-                        borderRadius: Radius.circular(15),
+                        borderRadius: Radius.circular(15.r),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10.r),
                         child: SizedBox(
-                          height: MediaQuery.of(context).size.height * .7,
+                          height: 600.h, // Using a fixed responsive height
                           child: artistSongs.when(
                             data: (songsData) {
                               final songsList = songsData
@@ -127,7 +128,6 @@ class ArtistdetailView extends ConsumerWidget {
                                   final song = songsList[index];
                                   return InkWell(
                                     onTap: () async {
-                                     
                                       context.push(
                                         '/songdetails',
                                         extra: {

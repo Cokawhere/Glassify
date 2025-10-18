@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/widgets/songCard.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
-
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'app_loader.dart';
 import '../../features/Auth/controller.dart';
 import '../../features/home/home_services.dart';
@@ -24,17 +24,20 @@ class Songsection extends ConsumerWidget {
     final userAsync = ref.watch(userStreamProvider);
 
     return Padding(
-      padding: const EdgeInsets.only(right: 8, left: 8, bottom: 0),
+      padding: EdgeInsets.symmetric(horizontal: 3.w),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SizedBox(width: 8),
+              SizedBox(width: 8.w),
               Glassify(
                 child: Text(
                   sectionName,
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.w900),
+                  style: TextStyle(
+                    fontSize: 23.sp,
+                    fontWeight: FontWeight.w900,
+                  ),
                 ),
               ),
               const Spacer(),
@@ -50,8 +53,9 @@ class Songsection extends ConsumerWidget {
               ),
             ],
           ),
+          SizedBox(height: 40.h),
           SizedBox(
-            height: 195,
+            height: 195.h,
             child: songs.when(
               data: (songs) => ListView.builder(
                 scrollDirection: Axis.horizontal,

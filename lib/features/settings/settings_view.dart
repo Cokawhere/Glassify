@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/widgets/LiquidSnackBar.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../common/styles/colors.dart';
@@ -84,7 +85,7 @@ class SettingsScreen extends ConsumerWidget {
         ),
         child: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: EdgeInsets.all(16.0.r),
             child: userAsyncValue.when(
               data: (user) {
                 if (user == null) {
@@ -97,26 +98,26 @@ class SettingsScreen extends ConsumerWidget {
                 }
                 return Column(
                   children: [
-                    SizedBox(height: 20),
+                    SizedBox(height: 20.h),
                     LiquidGlass(
                       shape: LiquidRoundedRectangle(
-                        borderRadius: Radius.circular(18),
+                        borderRadius: Radius.circular(18.r),
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(20.0),
+                        padding: EdgeInsets.all(20.0.r),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             CircleAvatar(
-                              radius: 50,
+                              radius: 50.r,
                               backgroundImage: NetworkImage(
                                 user.imageUrl ??
                                     "https://i.pinimg.com/1200x/10/d3/eb/10d3eb63d65c49f45148b61142d9b22d.jpg",
                               ),
                             ),
-                            const SizedBox(width: 20),
+                            SizedBox(width: 20.w),
                             Padding(
-                              padding: const EdgeInsets.only(top: 20),
+                              padding: EdgeInsets.only(top: 20.h),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -124,18 +125,19 @@ class SettingsScreen extends ConsumerWidget {
                                     user.name,
                                     style: const TextStyle(
                                       fontSize: 26,
-                                      fontWeight: FontWeight.bold,
+                                      fontWeight: FontWeight
+                                          .bold, // Consider .sp if needed
                                       color: Colors.white,
                                     ),
                                   ),
                                   Text(
                                     user.email,
                                     style: const TextStyle(
-                                      fontSize: 18,
+                                      fontSize: 18, // Consider .sp if needed
                                       color: Colors.white70,
                                     ),
                                   ),
-                                  const SizedBox(height: 10),
+                                  SizedBox(height: 10.h),
                                   IconButton(
                                     icon: const Icon(
                                       Icons.edit,
@@ -154,10 +156,10 @@ class SettingsScreen extends ConsumerWidget {
                         ),
                       ),
                     ),
-                    const SizedBox(height: 30),
+                    SizedBox(height: 30.h),
                     LiquidGlass(
                       shape: LiquidRoundedRectangle(
-                        borderRadius: Radius.circular(18),
+                        borderRadius: Radius.circular(18.r),
                       ),
                       child: ListTile(
                         leading: const Icon(
@@ -167,12 +169,13 @@ class SettingsScreen extends ConsumerWidget {
                         title: const Text(
                           'Contact Us',
                           style: TextStyle(
-                            fontSize: 20,
+                            fontSize: 20, // Consider .sp if needed
                             color: Colors.white,
                             fontWeight: FontWeight.w600,
                           ),
                         ),
                         subtitle: const Text(
+                          // Consider .sp if needed
                           'Created by Rana Ali',
                           style: TextStyle(fontSize: 16, color: Colors.white70),
                         ),
@@ -192,16 +195,13 @@ class SettingsScreen extends ConsumerWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.redAccent,
                         foregroundColor: Colors.white,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 40,
-                          vertical: 12,
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 40.w,
+                          vertical: 12.h,
                         ),
                       ),
                       icon: const Icon(Icons.logout),
-                      label: const Text(
-                        'Log Out',
-                        style: TextStyle(fontSize: 18),
-                      ),
+                      label: Text('Log Out', style: TextStyle(fontSize: 18.sp)),
                     ),
                   ],
                 );

@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/widgets/liquidPasswordfield.dart'
     show Liquidpasswordfield;
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../../common/styles/colors.dart';
 import '../../../common/widgets/LiquidSnackBar.dart';
@@ -59,7 +61,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
 
         child: Center(
           child: SingleChildScrollView(
-            padding: EdgeInsets.only(right: 8, left: 8, top: 60, bottom: 50),
+            padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 50.h),
             child: LiquidGlass(
               settings: LiquidGlassSettings(
                 thickness: 27,
@@ -70,11 +72,11 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
               ),
               glassContainsChild: false,
               shape: LiquidRoundedSuperellipse(
-                borderRadius: Radius.circular(80),
+                borderRadius: Radius.circular(80.r),
               ),
 
               child: Padding(
-                padding: const EdgeInsets.only(right: 10, left: 10, bottom: 50),
+                padding: EdgeInsets.fromLTRB(10.w, 0, 10.w, 50.h),
                 child: Form(
                   key: _formKey,
 
@@ -86,7 +88,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           left: 10,
                           top: 30,
                           bottom: 20,
-                        ),
+                        ).r,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -94,7 +96,7 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                               child: Text(
                                 'Welcome',
                                 style: TextStyle(
-                                  fontSize: 24,
+                                  fontSize: 24.sp,
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
@@ -110,31 +112,31 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                           return null;
                         },
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       Liquidtextfield(
                         controller: nameController,
                         label: "Name",
                         validator: (val) => null,
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
 
                       Liquidtextfield(
                         controller: imageUrlController,
                         label: "Profile Image (optional)",
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
 
                       Liquidpasswordfield(
                         controller: passwordController,
                         label: "Password",
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
 
                       Liquidpasswordfield(
                         controller: confirmPasswordController,
                         label: "Confirm Password",
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
 
                       Liquidbutton(
                         text: "Sign Up",
@@ -219,14 +221,14 @@ class _SignUpScreenState extends ConsumerState<SignUpScreen> {
                               );
                         },
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15.h),
                       InkWell(
                         onTap: () => context.go("/login"),
-                        child:Glassify(
+                        child: Glassify(
                           child: Text(
                             "Already have an account? Login",
                             style: GoogleFonts.roboto(
-                              fontSize: 14,
+                              fontSize: 14.sp,
                               fontWeight: FontWeight.w500,
                               color: Colors.black87,
                             ),

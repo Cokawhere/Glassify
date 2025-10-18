@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/widgets/ArtistCard.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_application_1/features/home/home_controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -13,15 +14,15 @@ class Artistsection extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final artists = ref.watch(artistProvider);
     return Padding(
-      padding: const EdgeInsets.only(left: 8, right: 8),
+      padding: EdgeInsets.symmetric(horizontal: 8.w),
       child: Column(
         children: [
-          const SizedBox(height: 8),
+          SizedBox(height: 8.h),
           LiquidGlass(
             glassContainsChild: false,
-            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(30)),
+            shape: LiquidRoundedRectangle(borderRadius: Radius.circular(30.r)),
             child: SizedBox(
-              height: 110,
+              height: 110.h,
               child: artists.when(
                 data: (artists) => ListView.builder(
                   scrollDirection: Axis.horizontal,

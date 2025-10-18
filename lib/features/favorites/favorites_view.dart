@@ -5,6 +5,8 @@ import 'package:flutter_application_1/features/Auth/controller.dart';
 import 'package:flutter_application_1/features/favorites/favcontroller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../common/widgets/app_loader.dart';
 
@@ -42,24 +44,24 @@ class FavoritesScreen extends ConsumerWidget {
           ),
           data: (songs) {
             return Padding(
-              padding: const EdgeInsets.all(3.0),
+              padding: EdgeInsets.all(3.0.r),
               child: LiquidGlass(
                 glassContainsChild: false,
                 settings: LiquidGlassSettings(
                   thickness: 8,
                   lightAngle: 40,
-                  lightness: 1.3,
+                  // lightness: 1.3,
                 ),
                 shape: LiquidRoundedRectangle(
-                  borderRadius: Radius.circular(18),
+                  borderRadius: Radius.circular(18.r),
                 ),
                 child: songs.isEmpty
-                    ? const Center(
+                    ?  Center(
                         child: Glassify(
                           child: Text(
                             "No favorites yet 😢",
                             style: TextStyle(
-                              fontSize: 20,
+                              fontSize: 20.sp,
                               color: AppColors.subfont,
                             ),
                           ),
@@ -67,17 +69,17 @@ class FavoritesScreen extends ConsumerWidget {
                       )
                     : Column(
                         children: [
-                          SizedBox(height: 10),
-                          SizedBox(height: 30),
+                          SizedBox(height: 10.h),
+                          SizedBox(height: 30.h),
 
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Glassify(
-                                child: const Text(
+                                child: Text(
                                   "Favorites",
                                   style: TextStyle(
-                                    fontSize: 28,
+                                    fontSize: 28.sp,
                                     fontWeight: FontWeight.bold,
                                     color: AppColors.subfont,
                                   ),
@@ -85,7 +87,7 @@ class FavoritesScreen extends ConsumerWidget {
                               ),
                             ],
                           ),
-                          SizedBox(height: 30),
+                          SizedBox(height: 30.h),
 
                           Expanded(
                             child: userAsync.when(
@@ -114,19 +116,18 @@ class FavoritesScreen extends ConsumerWidget {
                                         );
                                       },
                                       child: Padding(
-                                        padding: const EdgeInsets.all(8.0),
+                                        padding: EdgeInsets.all(8.0.r),
                                         child: LiquidGlass(
                                           shape: LiquidRoundedRectangle(
-                                            borderRadius: Radius.circular(10),
+                                            borderRadius: Radius.circular(10.r),
                                           ),
                                           child: Column(
                                             children: [
                                               Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                      horizontal: 8,
-                                                      vertical: 4,
-                                                    ),
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: 8.w,
+                                                  vertical: 4.h,
+                                                ),
                                                 child: Songitem(
                                                   title: song.title,
                                                   imageUrl: song.coverUrl,

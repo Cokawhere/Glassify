@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'package:rxdart/rxdart.dart';
 import '../../common/styles/colors.dart';
 import '../../main.dart';

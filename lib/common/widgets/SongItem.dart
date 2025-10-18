@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/styles/colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_application_1/features/ArtistDetailPage%D8%8C/artistdetailscontroller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -34,32 +35,32 @@ class _SongitemState extends ConsumerState<Songitem> {
     final likeSongController = ref.watch(likeSongProvider);
     if (widget.userId.isEmpty || widget.songId.isEmpty) {
       return Container(
-        padding: EdgeInsets.symmetric(horizontal: 3, vertical: 6),
+        padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 6.h),
         child: Row(
           children: [Text('Invalid data', style: TextStyle(color: Colors.red))],
         ),
       );
     }
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 3, vertical: 6),
+      padding: EdgeInsets.symmetric(horizontal: 3.w, vertical: 6.h),
       child: Row(
         children: [
           Container(
-            width: 70,
-            height: 70,
+            width: 70.w,
+            height: 70.w, // Use .w for square aspect ratio
             decoration: BoxDecoration(
               image: DecorationImage(
                 image: NetworkImage(widget.imageUrl),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.circular(8.0),
+              borderRadius: BorderRadius.circular(8.0.r),
             ),
           ),
 
-          SizedBox(width: 4),
+          SizedBox(width: 4.w),
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(6.0),
+              padding: EdgeInsets.all(6.0.r),
 
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -68,7 +69,7 @@ class _SongitemState extends ConsumerState<Songitem> {
                     widget.title,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 20.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -79,12 +80,12 @@ class _SongitemState extends ConsumerState<Songitem> {
                           artist.name,
                           style: const TextStyle(
                             color: AppColors.subfont,
-                            fontSize: 15,
+                            fontSize: 15, // .sp can be used here
                           ),
                         ),
-                        loading: () => const SizedBox(
-                          height: 10,
-                          width: 40,
+                        loading: () => SizedBox(
+                          height: 10.h,
+                          width: 40.w,
                           child: LinearProgressIndicator(
                             backgroundColor: AppColors.subfont,
                           ),
@@ -132,7 +133,7 @@ class _SongitemState extends ConsumerState<Songitem> {
                 icon: Icon(
                   isLiked ? Icons.favorite : Icons.favorite_border,
                   color: AppColors.subfont,
-                  size: 30,
+                  size: 30.r,
                 ),
               );
             },

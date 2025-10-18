@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/styles/colors.dart';
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 
 class MyGlassWidget extends StatelessWidget {
@@ -43,7 +44,7 @@ class MyGlassWidget extends StatelessWidget {
                 lightAngle: 45,                   // زاوية الضوء
                 ambientStrength: 1.0,             // شدة الإضاءة المحيطة
                 saturation: 1.2,                  // تشبع اللون
-                lightness: 1.1,                   // سطوع الخلفية, 
+                // lightness: 1.1,                   // سطوع الخلفية, 
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
