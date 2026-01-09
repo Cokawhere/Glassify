@@ -19,12 +19,49 @@ Liquid Glass Renderer for gorgeous glassmorphism effects
 Feature-Based Architecture with custom reusable widgets and clean separation of views, controllers, and services
 
 ##  Screenshots
+<table>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/home.jpg" width="300" alt="Home Screen"/>
+      <br><sub><b>Home Screen</b></sub>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/artistsong.jpg" width="300" alt="Artist Songs"/>
+      <br><sub><b>Artist Songs</b></sub>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/artistSong (2).jpg" width="300" alt="Artist Songs Variant"/>
+      <br><sub><b>Artist Songs (Variant)</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/favpage.jpg" width="300" alt="Favorites"/>
+      <br><sub><b>Favorites</b></sub>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/login.jpg" width="300" alt="Login"/>
+      <br><sub><b>Login</b></sub>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/sighup.jpg" width="300" alt="Signup"/>
+      <br><sub><b>Signup</b></sub>
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="assets/screenshots/settings.jpg" width="300" alt="Settings"/>
+      <br><sub><b>Settings</b></sub>
+    </td>
+    <td align="center">
+      <img src="assets/screenshots/songdetails.jpg" width="300" alt="Song Details"/>
+      <br><sub><b>Song Details</b></sub>
+    </td>
 
-## 📸 Screenshots
+  </tr>
+</table>
 
-| Home | Artist Songs | Favorites | Auth & Settings |
-|------|---------------|------------|-----------------|
-| ![Home](assets/screenshots/home.jpg) | ![Artist Songs](assets/screenshots/artistsong.jpg)<br>![Artist Songs 2](assets/screenshots/artistSong%20(2).jpg) | ![Favorites](assets/screenshots/favpage.jpg) | ![Login](assets/screenshots/login.jpg)<br>![Signup](assets/screenshots/sighup.jpg)<br>![Settings](assets/screenshots/settings.jpg)<br>![Song Details](assets/screenshots/songdetails.jpg) |
+<p align="center"><i>Clean & modern UI – fully responsive on Android & iOS 📲</i></p>
 
 
 ---
