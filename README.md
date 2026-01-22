@@ -1,4 +1,4 @@
-Glassify is a music app designed with a glassmorphism UI:
+ music app designed with a glassmorphism UI:
 
 ##  Screenshots
 <table>
