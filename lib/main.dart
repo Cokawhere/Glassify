@@ -29,9 +29,8 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // تهيئة ScreenUtil هنا
     return ScreenUtilInit(
-      designSize: const Size(375, 812), // ضعي هنا أبعاد التصميم الذي تعملين عليه
+      designSize: const Size(375, 812), 
       minTextAdapt: true,
       splitScreenMode: true,
       builder: (context, child) {

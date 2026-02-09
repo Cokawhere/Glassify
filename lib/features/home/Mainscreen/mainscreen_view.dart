@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/styles/colors.dart';
 import 'package:flutter_application_1/common/widgets/CurrentsongWidget.dart';
-import 'package:flutter_application_1/common/widgets/app_loader.dart';
 import 'package:flutter_application_1/features/Auth/controller.dart';
 import 'package:flutter_application_1/features/favorites/favorites_view.dart';
 import 'package:flutter_application_1/features/home/home_view.dart';
@@ -37,21 +36,17 @@ class _MainScreenState extends ConsumerState<MainScreen> {
   @override
   Widget build(BuildContext context) {
     final currentSong = ref.watch(currentSongProvider);
-    final userAsync = ref.watch(userStreamProvider);
+    final userAsync = ref.watch(currentUser);
     final isSongPlaying = currentSong != null;
     return Scaffold(
       backgroundColor: Colors.transparent,
       extendBody: true,
-      body: userAsync.when(
-        data: (user) {
-          return IndexedStack(
+      body: 
+          IndexedStack(
             index: _currentIndex,
             children: const [HomeScreen(), FavoritesScreen(), SettingsScreen()],
-          );
-        },
-        loading: () => const AppLoader(),
-        error: (error, stack) => Center(child: Text('Error: $error')),
-      ),
+          ),
+       
       bottomNavigationBar: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
@@ -59,7 +54,7 @@ class _MainScreenState extends ConsumerState<MainScreen> {
             Padding(
               padding: const EdgeInsets.fromLTRB(16, 0, 16, 8),
               child: CurrentSongWidget(
-                currentUserId: userAsync.value?.uid ?? '',
+                currentUserId: userAsync!.uid ?? '',
               ),
             ),
           BottomNavigationBar(

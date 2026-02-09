@@ -21,7 +21,7 @@ class Songsection extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final songs = ref.watch(songsProvider);
-    final userAsync = ref.watch(userStreamProvider);
+    final userAsync = ref.watch(currentUser);
 
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 3.w),
@@ -61,10 +61,8 @@ class Songsection extends ConsumerWidget {
                 scrollDirection: Axis.horizontal,
                 itemCount: songs.length,
                 itemBuilder: (context, index) {
-                  final song = songs[index];
-                  return userAsync.when(
-                    data: (user) {
-                      final currentUserId = user?.uid ?? '';
+                  final song = songs[index];              
+                      final currentUserId = userAsync?.uid ?? '';
                       return InkWell(
                         onTap: () async {
                           final selectedSong = songs[index];
@@ -87,10 +85,7 @@ class Songsection extends ConsumerWidget {
                         ),
                       );
                     },
-                    loading: () => const AppLoader(),
-                    error: (e, st) => Text('Failed to load user'),
-                  );
-                },
+                  
               ),
               error: (eror, stack) {
                 return const Text('faild to fetch songs data');

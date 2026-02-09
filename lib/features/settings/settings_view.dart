@@ -72,7 +72,7 @@ class SettingsScreen extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final userAsyncValue = ref.watch(userStreamProvider);
+    final userAsyncValue = ref.watch(currentUser);
 
     return Scaffold(
       body: Container(
@@ -86,133 +86,111 @@ class SettingsScreen extends ConsumerWidget {
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.all(16.0.r),
-            child: userAsyncValue.when(
-              data: (user) {
-                if (user == null) {
-                  return const Center(
-                    child: Text(
-                      'Not logged in',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  );
-                }
-                return Column(
-                  children: [
-                    SizedBox(height: 20.h),
-                    LiquidGlass(
-                      shape: LiquidRoundedRectangle(
-                        borderRadius: Radius.circular(18.r),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(20.0.r),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            CircleAvatar(
-                              radius: 50.r,
-                              backgroundImage: NetworkImage(
-                                user.imageUrl ??
-                                    "https://i.pinimg.com/1200x/10/d3/eb/10d3eb63d65c49f45148b61142d9b22d.jpg",
-                              ),
-                            ),
-                            SizedBox(width: 20.w),
-                            Padding(
-                              padding: EdgeInsets.only(top: 20.h),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    user.name,
-                                    style: const TextStyle(
-                                      fontSize: 26,
-                                      fontWeight: FontWeight
-                                          .bold, // Consider .sp if needed
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                  Text(
-                                    user.email,
-                                    style: const TextStyle(
-                                      fontSize: 18, // Consider .sp if needed
-                                      color: Colors.white70,
-                                    ),
-                                  ),
-                                  SizedBox(height: 10.h),
-                                  IconButton(
-                                    icon: const Icon(
-                                      Icons.edit,
-                                      color: Colors.white,
-                                    ),
-                                    onPressed: () => _showEditProfileDialog(
-                                      context,
-                                      ref,
-                                      user,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    SizedBox(height: 30.h),
-                    LiquidGlass(
-                      shape: LiquidRoundedRectangle(
-                        borderRadius: Radius.circular(18.r),
-                      ),
-                      child: ListTile(
-                        leading: const Icon(
-                          Icons.contact_mail,
-                          color: Colors.white,
-                        ),
-                        title: const Text(
-                          'Contact Us',
-                          style: TextStyle(
-                            fontSize: 20, // Consider .sp if needed
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
+            child: Column(
+              children: [
+                SizedBox(height: 20.h),
+                LiquidGlass(
+                  shape: LiquidRoundedRectangle(
+                    borderRadius: Radius.circular(18.r),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.all(20.0.r),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          radius: 50.r,
+                          backgroundImage: NetworkImage(
+                            userAsyncValue!.imageUrl ??
+                                "https://i.pinimg.com/1200x/10/d3/eb/10d3eb63d65c49f45148b61142d9b22d.jpg",
                           ),
                         ),
-                        subtitle: const Text(
-                          // Consider .sp if needed
-                          'Created by Rana Ali',
-                          style: TextStyle(fontSize: 16, color: Colors.white70),
+                        SizedBox(width: 20.w),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.h),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                userAsyncValue!.name,
+                                style: const TextStyle(
+                                  fontSize: 26,
+                                  fontWeight:
+                                      FontWeight.bold, // Consider .sp if needed
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                userAsyncValue!.email,
+                                style: const TextStyle(
+                                  fontSize: 18, // Consider .sp if needed
+                                  color: Colors.white70,
+                                ),
+                              ),
+                              SizedBox(height: 10.h),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.edit,
+                                  color: Colors.white,
+                                ),
+                                onPressed: () =>
+                                    _showEditProfileDialog(context, ref, userAsyncValue as UserModel),
+                              ),
+                            ],
+                          ),
                         ),
-                        onTap: () {
-                          LiquidSnackBar.show(
-                            context,
-                            message: "Contact action not implemented.",
-                          );
-                        },
-                      ),
+                      ],
                     ),
-                    const Spacer(),
-                    ElevatedButton.icon(
-                      onPressed: () async {
-                        await ref.read(authController).signout(context);
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.redAccent,
-                        foregroundColor: Colors.white,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 40.w,
-                          vertical: 12.h,
-                        ),
-                      ),
-                      icon: const Icon(Icons.logout),
-                      label: Text('Log Out', style: TextStyle(fontSize: 18.sp)),
-                    ),
-                  ],
-                );
-              },
-              loading: () => const Center(child: AppLoader()),
-              error: (e, st) => Center(
-                child: Text(
-                  'Error: $e',
-                  style: const TextStyle(color: Colors.red),
+                  ),
                 ),
-              ),
+                SizedBox(height: 30.h),
+                LiquidGlass(
+                  shape: LiquidRoundedRectangle(
+                    borderRadius: Radius.circular(18.r),
+                  ),
+                  child: ListTile(
+                    leading: const Icon(
+                      Icons.contact_mail,
+                      color: Colors.white,
+                    ),
+                    title: const Text(
+                      'Contact Us',
+                      style: TextStyle(
+                        fontSize: 20, // Consider .sp if needed
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    subtitle: const Text(
+                      // Consider .sp if needed
+                      'Created by Rana Ali',
+                      style: TextStyle(fontSize: 16, color: Colors.white70),
+                    ),
+                    onTap: () {
+                      LiquidSnackBar.show(
+                        context,
+                        message: "Contact action not implemented.",
+                      );
+                    },
+                  ),
+                ),
+                const Spacer(),
+                ElevatedButton.icon(
+                  onPressed: () async {
+                    await ref.read(authController).signout(context);
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.redAccent,
+                    foregroundColor: Colors.white,
+                    padding: EdgeInsets.symmetric(
+                      horizontal: 40.w,
+                      vertical: 12.h,
+                    ),
+                  ),
+                  icon: const Icon(Icons.logout),
+                  label: Text('Log Out', style: TextStyle(fontSize: 18.sp)),
+                ),
+              ],
             ),
           ),
         ),

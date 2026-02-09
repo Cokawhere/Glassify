@@ -11,27 +11,27 @@ import 'package:rxdart/rxdart.dart';
 final authController = Provider((ref) => AuthController(ref));
 final currentUser = StateProvider<UserModel?>((ref) => null);
 
-final userStreamProvider = StreamProvider<UserModel?>((ref) {
-  return firebase_auth.FirebaseAuth.instance.authStateChanges().switchMap((
-    firebaseUser,
-  ) {
-    if (firebaseUser == null) {
-      return Stream.value(null);
-    } else {
-      return FirebaseFirestore.instance
-          .collection("users")
-          .doc(firebaseUser.uid)
-          .snapshots()
-          .map((snapshot) {
-            if (snapshot.exists && snapshot.data() != null) {
-              return UserModel.frommap(snapshot.data()!);
-            } else {
-              return null;
-            }
-          });
-    }
-  });
-});
+// final userStreamProvider = StreamProvider<UserModel?>((ref) {
+//   return firebase_auth.FirebaseAuth.instance.authStateChanges().switchMap((
+//     firebaseUser,
+//   ) {
+//     if (firebaseUser == null) {
+//       return Stream.value(null);
+//     } else {
+//       return FirebaseFirestore.instance
+//           .collection("users")
+//           .doc(firebaseUser.uid)
+//           .snapshots()
+//           .map((snapshot) {
+//             if (snapshot.exists && snapshot.data() != null) {
+//               return UserModel.frommap(snapshot.data()!);
+//             } else {
+//               return null;
+//             }
+//           });
+//     }
+//   });
+// });
 
 class AuthController {
   final Ref ref;

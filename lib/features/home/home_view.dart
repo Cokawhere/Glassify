@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/common/widgets/ArtistSection.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:liquid_glass_renderer/experimental.dart';
 import 'package:liquid_glass_renderer/liquid_glass_renderer.dart';
 import '../../common/styles/colors.dart';
 import '../../common/widgets/Songsection.dart';
@@ -29,17 +31,14 @@ class HomeScreen extends ConsumerWidget {
           ),
         ),
         child: SafeArea(
-          // bottom: false,
           child: Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: EdgeInsets.only(left: 6.r, right: 6.r),
             child: LiquidGlass(
               glassContainsChild: true,
-              settings: LiquidGlassSettings(
-                thickness: 8,
-                lightAngle: 40,
-                lightness: 1.3,
+              settings: LiquidGlassSettings(thickness: 8, lightAngle: 40),
+              shape: LiquidRoundedRectangle(
+                borderRadius: Radius.circular(18.r),
               ),
-              shape: LiquidRoundedRectangle(borderRadius: Radius.circular(18)),
 
               child: Column(
                 children: [
@@ -48,11 +47,11 @@ class HomeScreen extends ConsumerWidget {
                     children: [
                       Glassify(
                         child: Padding(
-                          padding: const EdgeInsets.only(top: 14),
+                          padding: EdgeInsets.only(top: 1.h),
                           child: Text(
                             'Glassify',
                             style: GoogleFonts.tajawal(
-                              fontSize: 35,
+                              fontSize: 35.sp,
                               fontWeight: FontWeight.w900,
                               letterSpacing: 1,
                             ),
@@ -77,7 +76,7 @@ class HomeScreen extends ConsumerWidget {
                             songsProvider: alphabeticalSongsProvider,
                           ),
 
-                          SizedBox(height: 100),
+                          SizedBox(height: 100.h),
                         ],
                       ),
                     ),

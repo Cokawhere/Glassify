@@ -1,6 +1,6 @@
+import 'package:flutter_application_1/features/Auth/controller.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import '../Auth/controller.dart';
 import '../notifcation audio state/model_song.dart';
 import 'favservices.dart';
 
@@ -16,12 +16,12 @@ class LikedSongsNotifier extends StateNotifier<AsyncValue<List<Songg>>> {
 
   Future<void> fetch() async {
     try {
-      final currentUser = await ref.watch(userStreamProvider.future);
-      if (currentUser == null) {
+      final user = ref.watch(currentUser);
+      if (user == null) {
         state = const AsyncData([]);
         return;
       }
-      final songs = await _service.getLikedSongs(currentUser.uid);
+      final songs = await _service.getLikedSongs(user.uid);
       state = AsyncData(songs);
     } catch (e) {
       state = AsyncError(e, StackTrace.current);

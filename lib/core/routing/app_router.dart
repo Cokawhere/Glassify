@@ -14,11 +14,8 @@ import '../../features/home/home_view.dart';
 import '../../models/artist.dart';
 
 
-
-
-
 GoRouter createRouter(WidgetRef ref) {
-  final userStream = ref.watch(userStreamProvider);
+  final userStream = ref.watch(currentUser);
 
   return GoRouter(
     initialLocation: '/main',
@@ -68,11 +65,10 @@ GoRouter createRouter(WidgetRef ref) {
     redirect: (context, state) {
       final currentPath = state.uri.toString();
 
-      if (userStream.isLoading) return null;
 
-      if (userStream.hasError) return '/login';
+      if (userStream==null) return '/login';
 
-      final user = userStream.value;
+      final user = userStream;
 
       if (user == null && currentPath != '/login' && currentPath != '/signup') {
         return '/login';
@@ -82,12 +78,6 @@ GoRouter createRouter(WidgetRef ref) {
           (currentPath == '/login' || currentPath == '/signup')) {
         return '/main';
       }
-
-      // if (user != null &&
-      //     (currentPath == '/login' || currentPath == '/signup')) {
-      //   final last = ref.read(lastPathProvider);
-      //   return last == '/login' || last == '/signup' ? '/main' : last;
-      // }
 
       return null;
     },

@@ -6,11 +6,9 @@ class AppLifecycleHandler extends ConsumerStatefulWidget {
   final Widget child;
 
   const AppLifecycleHandler({super.key, required this.child});
-
   @override
   ConsumerState<AppLifecycleHandler> createState() => _AppLifecycleHandlerState();
 }
-
 class _AppLifecycleHandlerState extends ConsumerState<AppLifecycleHandler> with WidgetsBindingObserver {
   @override
   void initState() {
@@ -27,7 +25,7 @@ class _AppLifecycleHandlerState extends ConsumerState<AppLifecycleHandler> with 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     if (state == AppLifecycleState.resumed) {
-      ref.refresh(userStreamProvider);
+      ref.watch(currentUser);
     }
   }
 

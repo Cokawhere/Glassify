@@ -18,7 +18,7 @@ class FavoritesScreen extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final likedSongsAsync = ref.watch(likedSongsProvider);
-    final userAsync = ref.watch(userStreamProvider);
+    final userAsync = ref.watch(currentUser);
 
     return Container(
       decoration: const BoxDecoration(
@@ -56,7 +56,7 @@ class FavoritesScreen extends ConsumerWidget {
                   borderRadius: Radius.circular(18.r),
                 ),
                 child: songs.isEmpty
-                    ?  Center(
+                    ? Center(
                         child: Glassify(
                           child: Text(
                             "No favorites yet 😢",
@@ -89,63 +89,55 @@ class FavoritesScreen extends ConsumerWidget {
                           ),
                           SizedBox(height: 30.h),
 
-                          Expanded(
-                            child: userAsync.when(
-                              loading: () => const AppLoader(),
-                              error: (e, st) => const Center(
-                                child: Text('Failed to load user'),
-                              ),
-                              data: (user) {
-                                final currentUserId = user?.uid ?? '';
-                                return ListView.builder(
-                                  itemCount: songs.length,
-                                  itemBuilder: (context, index) {
-                                    final song = songs[index];
-                                    return InkWell(
-                                      onTap: () async {
-                                        final artist =
-                                            await getArtistFromSongId(song.id);
-                                        context.push(
-                                          '/songdetails',
-                                          extra: {
-                                            'song': song,
-                                            'artist': artist,
-                                            'userId': currentUserId,
-                                            'artistSongs': songs,
-                                          },
-                                        );
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.all(8.0.r),
-                                        child: LiquidGlass(
-                                          shape: LiquidRoundedRectangle(
-                                            borderRadius: Radius.circular(10.r),
+                          Expanded(child: Text('Failed to load user')),
+
+                          ListView.builder(
+                            itemCount: songs.length,
+                            itemBuilder: (context, index) {
+                              final song = songs[index];
+                              return InkWell(
+                                onTap: () async {
+                                  final artist = await getArtistFromSongId(
+                                    song.id,
+                                  );
+                                  context.push(
+                                    '/songdetails',
+                                    extra: {
+                                      'song': song,
+                                      'artist': artist,
+                                      'userId': userAsync.uid,
+                                      'artistSongs': songs,
+                                    },
+                                  );
+                                },
+                                child: Padding(
+                                  padding: EdgeInsets.all(8.0.r),
+                                  child: LiquidGlass(
+                                    shape: LiquidRoundedRectangle(
+                                      borderRadius: Radius.circular(10.r),
+                                    ),
+                                    child: Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w,
+                                            vertical: 4.h,
                                           ),
-                                          child: Column(
-                                            children: [
-                                              Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                  horizontal: 8.w,
-                                                  vertical: 4.h,
-                                                ),
-                                                child: Songitem(
-                                                  title: song.title,
-                                                  imageUrl: song.coverUrl,
-                                                  songId: song.id,
-                                                  artistId: song.artistId,
-                                                  userId: currentUserId,
-                                                  audioUrl: song.audioUrl,
-                                                ),
-                                              ),
-                                            ],
+                                          child: Songitem(
+                                            title: song.title,
+                                            imageUrl: song.coverUrl,
+                                            songId: song.id,
+                                            artistId: song.artistId,
+                                            userId: userAsync!.uid,
+                                            audioUrl: song.audioUrl,
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                );
-                              },
-                            ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            },
                           ),
                         ],
                       ),
