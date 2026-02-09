@@ -68,7 +68,4 @@ Feature-Based Architecture with custom reusable widgets and clean separation of 
 
 
 
-##  About
 
-Built by **Rana**  
-Using Flutter and BLoC for clean and scalable development.
