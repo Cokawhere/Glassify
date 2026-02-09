@@ -8,9 +8,7 @@ import '../notifcation audio state/audio_handler.dart';
 import '../notifcation audio state/controller.dart';
 import '../notifcation audio state/model_song.dart';
 
-final localPositionProvider = StateProvider<Duration>((ref) => Duration.zero);
-final localDurationProvider = StateProvider<Duration>((ref) => Duration.zero);
-final localIsPlayingProvider = StateProvider<bool>((ref) => false);
+
 
 class PlaybackControls extends ConsumerWidget {
   final Songg displayedSong;
